@@ -10,3 +10,8 @@ main:
     div $t8, $t9 #calulcation
     mfhi $t0 # n value 
 loop:   
+    beq	$t0, $zero, exit #check if counter = 0, exit loop if it is
+    li $v0, 4       #selecting print function for syscall
+    la $a0, out_string  #selecting address of string
+    syscall             #print
+    addi $t0, $t0, -1      #decrement counter
