@@ -15,3 +15,7 @@ loop:
     la $a0, out_string  #selecting address of string
     syscall             #print
     addi $t0, $t0, -1      #decrement counter
+    j loop                  #jump back to loop
+exit:
+    li $v0, 10              #select exit for syscall
+    syscall
