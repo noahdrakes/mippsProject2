@@ -94,3 +94,10 @@ main:
         syscall 
 
         li $v0, 1       #selecting print function for syscall
+
+        move $a0, $t4  #selecting address of string
+        syscall   
+
+
+    li $v0, 10              #select exit for syscall
+    syscall
