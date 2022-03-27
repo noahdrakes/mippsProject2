@@ -78,3 +78,11 @@ main:
             addi $t5, $t6, -87
             add $t4, $t4, $t5
             j nothingHappens
+
+        nothingHappens:
+            #nothing happens
+
+        addi $t0, $t0, 1 #incriment
+        addi $t7, $t7, 1
+    
+        j loop
