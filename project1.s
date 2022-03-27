@@ -53,10 +53,16 @@ main:
 
         #checking if loop is finished
         beq $t0, $t1, print
-        
+
         lb $t6, 0($t7) #load first byte into register $t6
 
         ble $t6, 57, decimal
         ble $t6, $t2, capitalLetters
         ble $t6, $t3, lowercaseLetters
         ble $t6, 127, nothingHappens
+
+        decimal:
+            blt $t6, 48, nothingHappens
+            addi $t5, $t6, -48
+            add $t4, $t4, $t5
+            j nothingHappens
