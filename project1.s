@@ -37,3 +37,19 @@ main:
 
     #range for LOWERCASE LETTERS
     addi $t3, $s1, 97
+
+    #register for sum 
+    li $t4, 0
+
+    #change s3 to t6
+    
+
+    loop:
+        #value for storing decimal value of each character
+        li $t5, 0
+
+        #value for storing single byte
+        li $t6, 0
+
+        #checking if loop is finished
+        beq $t0, $t1, print
