@@ -22,3 +22,18 @@ main:
     la $a0, userInput #read 11 characters
     li $a1, 11
     syscall #execute previous instruction 
+
+#s0 = N
+    #S1 = M
+    #t7 = userInput (11 bytes)
+    #t6 = single character (1 byte)
+
+    li $t0, 0
+    li $t1, 11
+    move $t7, $a0
+
+    #range for CAPITAL LETTERS 
+    addi $t2, $s1, 65
+
+    #range for LOWERCASE LETTERS
+    addi $t3, $s1, 97
