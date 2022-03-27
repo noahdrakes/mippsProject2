@@ -86,3 +86,11 @@ main:
         addi $t7, $t7, 1
     
         j loop
+
+
+    print:
+        li $v0, 4       #selecting print function for syscall
+        la $a0, newLineCharacter  #selecting address of string
+        syscall 
+
+        li $v0, 1       #selecting print function for syscall
