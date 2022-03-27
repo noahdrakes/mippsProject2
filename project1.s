@@ -72,3 +72,9 @@ main:
             addi $t5, $t6, -55
             add $t4, $t4, $t5
             j nothingHappens
+
+        lowercaseLetters:
+            blt $t6, 97, nothingHappens
+            addi $t5, $t6, -87
+            add $t4, $t4, $t5
+            j nothingHappens
