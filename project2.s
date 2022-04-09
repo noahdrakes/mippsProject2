@@ -5,6 +5,12 @@
 
 main:
 
+    #  ****occupied registers****
+    #   $s0 = M
+    #   $s1 = N
+    #   $t7 = characters from user input
+    #   #t6 = new register for update user input without unnecessary spaces
+
     li $t8, 02927184 #loading bison id
     li $t9, 11 #divisor
 
@@ -23,8 +29,20 @@ main:
     syscall #execute previous instruction 
 
     move $t7, $a0 #move this value to an accessible register
+    
+    li $t6, 0 #register for new string value without extra spaces
+    
+
+    li $t5, 0 #increment for removeSpaces and Tabs
+    removeSpacesAndTabs:
+        beq $t5, 1000, calculateValueFromInput #check if reached end of input
 
 
+        j removeSpacesAndTabs
+
+
+    
+    
 
 
 li $v0, 10              #select exit for syscall
