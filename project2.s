@@ -1,6 +1,7 @@
 .data   
     userInput: space 1000
     newLineCharacter: .asciiz "/n"
+.text
 
 main:
 
@@ -15,4 +16,9 @@ main:
 
     #M = $s0
     #N = $s1
+
+    li $v0, 8 #get input from user
+    la $a0, userInput #read 1000 characters
+    li $a1, 999
+    syscall #execute previous instruction 
 
