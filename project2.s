@@ -1,5 +1,5 @@
 .data   
-    userInput: space 1000
+    userInput: .space 1000
     newLineCharacter: .asciiz "/n"
 .text
 
@@ -19,6 +19,13 @@ main:
 
     li $v0, 8 #get input from user
     la $a0, userInput #read 1000 characters
-    li $a1, 999
+    li $a1, 999 #set amount of characters (bytes)
     syscall #execute previous instruction 
 
+    move $t7, $a0 #move this value to an accessible register
+
+
+
+
+li $v0, 10              #select exit for syscall
+syscall
