@@ -28,21 +28,35 @@ main:
     li $a1, 999 #set amount of characters (bytes)
     syscall #execute previous instruction 
 
-    move $t7, $a0 #move this value to an accessible register
+    move $t7, $a0 #move userInput value to an accessible register
     
     li $t6, 0 #register for new string value without extra spaces
     
+    #value for storing single byte
+    li $t6, 0
 
     li $t5, 0 #increment for removeSpaces and Tabs
     removeSpacesAndTabs:
-        beq $t5, 1000, calculateValueFromInput #check if reached end of input
+        beq $t5, 1000, storeRealValues #check if reached end of input
+        lb $t6, 0($t7) #load single byte into register $t6
 
 
+        #       checks if there are any spaces
+
+        beq $t6, 11, skip   #if character is line tab -> skip
+        beq $t6, 9, skip    #if character is char tab -> skip
+        beq $t6, 32, skip   #if character is space    -> skip
+
+
+        skip:
+
+        addi $t5, $t5, 1 #increment loop index
+        addi $t7, $t7, 1 #increment index for array of user input characters
         j removeSpacesAndTabs
 
 
     
-    
+    storeRealValues:
 
 
 li $v0, 10              #select exit for syscall
