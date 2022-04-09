@@ -1,3 +1,7 @@
+.data   
+    userInput: space 1000
+    newLineCharacter: .asciiz "/n"
+
 main:
 
     li $t8, 02927184 #loading bison id
@@ -10,4 +14,5 @@ main:
     addi $s1, $s0, -10 #M is in $s1
 
     #M = $s0
-    #N = $s1 
+    #N = $s1
+
