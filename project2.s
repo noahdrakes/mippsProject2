@@ -1,6 +1,7 @@
 .data   
     userInput: .space 1000
     newLineCharacter: .asciiz "/n"
+    array4characters: .byte 0,0,0,0 
 .text
 
 main:
@@ -52,7 +53,7 @@ main:
         beq $t6, 9, skip    #if character is char tab -> skip
         beq $t6, 32, skip   #if character is space    -> skip
 
-        li $t4, $t7         #save the increment where the first character starts [$t4]
+        move $t4, $t7         #save the increment where the first character starts [$t4]
 
         j storeRealValues   #once first real value is detected jump to store real values 
 
@@ -65,13 +66,21 @@ main:
 
     
     #                       **STORE THE FIRST FOUR LEGITIMATE VALUES**
+    
+    #using register $t3 for array
 
     li $t5, 0               #increment for store real values
-    storeRealValues:    
-        beq $t5, 4, checkRemainingTrailingCharacters
-
-
     
+    storeRealValues:    
+        beq $t5, 3, checkRemainingTrailingCharacters        #check if increment is less than 4
+        sb $t6, 0($t3)
+
+        addi $t5, $t5, 1
+        addi $t3, $t3, 1
+        j storeRealValues
+
+
+    checkRemainingTrailingCharacters:
 
 li $v0, 10              #select exit for syscall
 syscall
