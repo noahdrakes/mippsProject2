@@ -23,22 +23,27 @@ main:
     #M = $s0
     #N = $s1
 
-    li $v0, 8 #get input from user
-    la $a0, userInput #read 1000 characters
-    li $a1, 999 #set amount of characters (bytes)
-    syscall #execute previous instruction 
+    li $v0, 8               #get input from user
+    la $a0, userInput       #read 1000 characters
+    li $a1, 999             #set amount of characters (bytes)
+    syscall                 #execute previous instruction 
 
-    move $t7, $a0 #move userInput value to an accessible register
+    move $t7, $a0           #move userInput value to an accessible register
     
-    li $t6, 0 #register for new string value without extra spaces
+    li $t6, 0               #register for new string value without extra spaces
     
     #value for storing single byte
     li $t6, 0
 
+    
+
+    #                       **REMOVING BEGINNING SPACES AND TABS **
+
     li $t5, 0 #increment for removeSpaces and Tabs
+
     removeSpacesAndTabs:
-        beq $t5, 1000, storeRealValues #check if reached end of input
-        lb $t6, 0($t7) #load single byte into register $t6
+        beq $t5, 1000, storeRealValues  #check if reached end of input
+        lb $t6, 0($t7)      #load single byte into register $t6
 
 
         #       checks if there are any spaces
@@ -47,6 +52,9 @@ main:
         beq $t6, 9, skip    #if character is char tab -> skip
         beq $t6, 32, skip   #if character is space    -> skip
 
+        li $t4, $t7         #save the increment where the first character starts [$t4]
+
+        j storeRealValues   #once first real value is detected jump to store real values 
 
         skip:
 
@@ -56,8 +64,14 @@ main:
 
 
     
-    storeRealValues:
+    #                       **STORE THE FIRST FOUR LEGITIMATE VALUES**
 
+    li $t5, 0               #increment for store real values
+    storeRealValues:    
+        beq $t5, 4, checkRemainingTrailingCharacters
+
+
+    
 
 li $v0, 10              #select exit for syscall
 syscall
