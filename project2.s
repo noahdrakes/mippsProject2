@@ -126,7 +126,12 @@ check4CharactersArray:
         beq $t5, 4, printAnswer     #once loop ends print answer
         lb $t6, array4characters($t5)       #get character from (potentially) valid character away
 
-        
+        beq $t6, 11, invalidInput   #if character is line tab -> jump to invalid Input
+        beq $t6, 9, invalidInput    #if character is char tab -> jump to invalid input
+        beq $t6, 32, invalidInput   #if character is space    -> jump to invalid input
+
+
+        j loop2
 
 printAnswer:
 
