@@ -2,6 +2,7 @@
     userInput: .space 1000
     newLineCharacter: .asciiz "\n"
     array4characters: .space 4
+    invalidInputString: .asciiz "Not Recognized \n"
 .text
 
 main:
@@ -36,9 +37,9 @@ main:
     #value for storing single byte
     li $t6, 0
 
-    
 
     #                       **REMOVING BEGINNING SPACES AND TABS **
+
 
     li $t5, 0 #increment for removeSpaces and Tabs
 
@@ -92,17 +93,19 @@ main:
 
 
     checkRemainingTrailingCharacters:
-       beq $t5, 1000, check4CharactersArray:
+       beq $t5, 1000, check4CharactersArray
 
+        beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
+        beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
 
-        beq $t6, 11, skip   #if character is line tab -> skip
-        beq $t6, 9, skip    #if character is char tab -> skip
-        beq $t6, 32, skip   #if character is space    -> skip
+        beq $t6, 11, skip1   #if character is line tab -> skip
+        beq $t6, 9, skip1    #if character is char tab -> skip
+        beq $t6, 32, skip1   #if character is space    -> skip
 
-        invalidInput:
+        j invalidInput
 
-        skip: 
-
+        skip1: 
+            addi $t7, $t7, 1
             lb $t6, 0($t7)          #get next character from four bit array
 
             j checkRemainingTrailingCharacters
@@ -110,7 +113,6 @@ main:
 
 
 invalidInput:
-
 
 
 li $v0, 10              #select exit for syscall
