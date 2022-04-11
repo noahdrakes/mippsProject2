@@ -1,6 +1,6 @@
 .data   
     userInput: .space 1000
-    newLineCharacter: .asciiz "/n"
+    newLineCharacter: .asciiz "\n"
     array4characters: .space 4
 .text
 
@@ -53,7 +53,6 @@ main:
         beq $t6, 9, skip    #if character is char tab -> skip
         beq $t6, 32, skip   #if character is space    -> skip
 
-        move $t4, $t7         #save the increment where the first character starts [$t4]
 
         j storeRealValues   #once first real value is detected jump to store real values 
 
@@ -73,22 +72,47 @@ main:
 
     
     storeRealValues:  
-        li $t5, 0                   #increment for store real values
+        li $t4, 0                   #increment for store real values
         li $t3, 0                   #load address to store array of 4 bytes for the 4 real characters
 
-        loopStoreRealvalues:  
-            beq $t5, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
-            sb $t6, array4characters($t3)
+        loopStoreRealValues:  
+            beq $t4, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
+            sb $t6, array4characters($t3)                       #store valid characters in new array                   
 
-            lb $t6, 0($t7)
 
-            addi $t5, $t5, 1
+            addi $t4, $t4, 1        #increment loop
             addi $t7, $t7, 1        #increment index for array of user input characters
-            addi $t3, $t3, 1
+            addi $t3, $t3, 1        #increment index for character array
+            addi $t5, $t5, 1        #increment original character loop to skip the valid character and check for invalid characters in the check trailing remain characters function
+            lb $t6, 0($t7)          #get next character from four bit array
+
+
+             
             j loopStoreRealValues
 
 
     checkRemainingTrailingCharacters:
+       beq $t5, 1000, check4CharactersArray:
+
+
+        beq $t6, 11, skip   #if character is line tab -> skip
+        beq $t6, 9, skip    #if character is char tab -> skip
+        beq $t6, 32, skip   #if character is space    -> skip
+
+
+
+
 
 li $v0, 10              #select exit for syscall
 syscall
+
+
+
+# lb $t1, array4characters($t3)
+            # li $v0, 1       #selecting print function for syscall
+            # move $a0, $t1  #selecting address of string
+            # syscall
+
+            # li $v0, 4       #selecting print function for syscall
+            # la $a0, newLineCharacter  #selecting address of string
+            # syscall
