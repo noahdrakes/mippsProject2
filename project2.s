@@ -113,7 +113,13 @@ main:
 
 
 invalidInput:
+    li $v0, 4       #selecting print function for syscall
+    la $a0, invalidInputString  #selecting address of string
+    syscall
 
+
+
+check4CharactersArray:
 
 li $v0, 10              #select exit for syscall
 syscall
