@@ -80,7 +80,12 @@ main:
             beq $t4, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
             sb $t6, array4characters($t3)                       #store valid characters in new array                   
 
+            #       if it sees a space, it jumps to trailing characters
 
+            beq $t6, 11, checkRemainingTrailingCharacters   #if character is line tab -> checkRemainingCharacters
+            beq $t6, 9, checkRemainingTrailingCharacters    #if character is char tab -> checkRemainingCharacters
+            beq $t6, 32, checkRemainingTrailingCharacters   #if character is space    -> checkRemainingCharacters
+            
             addi $t4, $t4, 1        #increment loop
             addi $t7, $t7, 1        #increment index for array of user input characters
             addi $t3, $t3, 1        #increment index for character array
@@ -116,6 +121,8 @@ invalidInput:
     li $v0, 4       #selecting print function for syscall
     la $a0, invalidInputString  #selecting address of string
     syscall
+    j exitProgram
+
 
 
 
@@ -158,7 +165,8 @@ check4CharactersArray:
             exponent0:
                 mult 1, $t2
                 mflo $t2
-            
+
+
 
 
 
@@ -168,8 +176,10 @@ check4CharactersArray:
 
 printAnswer:
 
-li $v0, 10              #select exit for syscall
-syscall
+
+exitProgram:
+    li $v0, 10              #select exit for syscall
+    syscall
 
 
 
