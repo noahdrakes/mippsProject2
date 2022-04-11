@@ -177,7 +177,9 @@ check4CharactersArray:
                 mult $s1, $s1
                 mflo $s1
                 mult $s1, $t9
-                
+                mflo $s1
+                mult $s1, $t2
+                mflo $t2
 
 
 
