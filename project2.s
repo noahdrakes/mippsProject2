@@ -149,7 +149,16 @@ check4CharactersArray:
             beq $t5, 0, exponent0
             beq $t5, 1, exponent1
             beq $t5, 2, exponent2
+            beq $t5, 3, exponent3
 
+
+
+
+
+            exponent0:
+                mult 1, $t2
+                mflo $t2
+            
 
 
 
