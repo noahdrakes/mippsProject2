@@ -99,7 +99,17 @@ main:
         beq $t6, 9, skip    #if character is char tab -> skip
         beq $t6, 32, skip   #if character is space    -> skip
 
+        invalidInput:
 
+        skip: 
+
+            lb $t6, 0($t7)          #get next character from four bit array
+
+            j checkRemainingTrailingCharacters
+
+
+
+invalidInput:
 
 
 
