@@ -120,17 +120,41 @@ invalidInput:
 
 
 check4CharactersArray:
-    li $t5, 0           #index of loop
+    li $t5, 0          #index of loop
+
+    li $t7, 3           #index of 4character array
+
+    li $t2, 0           #reg for storing the correct decimal value for characters
+
+    #range for CAPITAL LETTERS 
+    addi $t2, $s1, 65
+
+    #range for LOWERCASE LETTERS
+    addi $t3, $s1, 97
+
+    #register for sum 
+    li $t4, 0
 
     loop2:
         beq $t5, 4, printAnswer     #once loop ends print answer
-        lb $t6, array4characters($t5)       #get character from (potentially) valid character away
+        lb $t6, array4characters($t7)       #get character from (potentially) valid character away
 
         beq $t6, 11, invalidInput   #if character is line tab -> jump to invalid Input
         beq $t6, 9, invalidInput    #if character is char tab -> jump to invalid input
         beq $t6, 32, invalidInput   #if character is space    -> jump to invalid input
 
+        li $t1, 1           #reg for carrying exponent
 
+        exponentLoop:
+            beq $t5, 0, exponent0
+            beq $t5, 1, exponent1
+            beq $t5, 2, exponent2
+
+
+
+
+        addi $t5, $t5, 1
+        addi $t7, $t7, -1
         j loop2
 
 printAnswer:
