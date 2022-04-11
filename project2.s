@@ -161,6 +161,12 @@ check4CharactersArray:
         blt $t6, $t3, lowercaseLetters
         ble $t6, 127, nothingHappens
 
+        decimal:
+            blt $t6, 48, nothingHappens
+            addi $t5, $t6, -48
+            add $t4, $t4, $t5
+            j nothingHappens
+
 
 
 
