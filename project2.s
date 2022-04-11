@@ -82,6 +82,8 @@ main:
 
             #       if it sees a space, it jumps to trailing characters
 
+            
+
             beq $t6, 11, checkRemainingTrailingCharacters   #if character is line tab -> checkRemainingCharacters
             beq $t6, 9, checkRemainingTrailingCharacters    #if character is char tab -> checkRemainingCharacters
             beq $t6, 32, checkRemainingTrailingCharacters   #if character is space    -> checkRemainingCharacters
@@ -93,12 +95,14 @@ main:
             lb $t6, 0($t7)          #get next character from four bit array
 
 
+            beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
+            beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
              
             j loopStoreRealValues
 
 
     checkRemainingTrailingCharacters:
-       beq $t5, 1000, check4CharactersArray #loop condition -> once program has reached the 1000th character
+        beq $t5, 1000, check4CharactersArray #loop condition -> once program has reached the 1000th character
 
         beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
         beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
@@ -134,16 +138,16 @@ check4CharactersArray:
     li $t2, 0           #reg for storing the correct decimal value for characters
 
     #range for CAPITAL LETTERS 
-    addi $t2, $s1, 65
+    addi $s3, $s1, 65
 
     #range for LOWERCASE LETTERS
     addi $t3, $s1, 97
 
     #register for sum 
-    li $t4, 0
+    li $t0, 0
 
     loop2:
-        beq $t5, 4, printAnswer     #once loop ends print answer
+        beq $t5, $t4, printAnswer     #once loop ends print answer
         lb $t6, array4characters($t7)       #get character from (potentially) valid character away
 
         beq $t6, 11, invalidInput   #if character is line tab -> jump to invalid Input
@@ -157,32 +161,28 @@ check4CharactersArray:
 
 
         ble $t6, 57, decimal
-        blt $t6, $t2, capitalLetters
+        blt $t6, $s3, capitalLetters
         blt $t6, $t3, lowercaseLetters
-        ble $t6, 127, nothingHappens
+        ble $t6, 127, invalidInput
 
         decimal:
-            blt $t6, 48, nothingHappens
-            addi $t5, $t6, -48
-            add $t4, $t4, $t5
-            j nothingHappens
+            blt $t6, 48, invalidInput
+            addi $t2, $t6, -48
+            j exponentLoop
 
         capitalLetters:
-            blt $t6, 65, nothingHappens
-            addi $t5, $t6, -55
-            add $t4, $t4, $t5
-            j nothingHappens
+            blt $t6, 65, invalidInput
+            addi $t2, $t6, -55
+            j exponentLoop
 
         lowercaseLetters:
-            blt $t6, 97, nothingHappens
-            addi $t5, $t6, -87
-            add $t4, $t4, $t5
-            j nothingHappens
-
-        nothingHappens:
-            #nothing happens
+            blt $t6, 97, invalidInput
+            addi $t2, $t6, -87
+            j exponentLoop
 
 
+
+        #add $t0, $t0, $t5
 
         exponentLoop:
             beq $t5, 0, exponent0
@@ -195,34 +195,43 @@ check4CharactersArray:
 
 
             exponent0:
-                mult 1, $t2
+                mult $t1, $t2
                 mflo $t2
+                j sum
+
             exponent1:
                 mult $s1, $t2
                 mflo $t2
+                j sum
             exponent2:
                 mult $s1, $s1
                 mflo $s1
                 mult $s1, $t2
                 mflo $t2
+                j sum
             exponent3: 
-                li $t9, $s1
+                move $t9, $s1
                 mult $s1, $s1
                 mflo $s1
                 mult $s1, $t9
                 mflo $s1
                 mult $s1, $t2
                 mflo $t2
+                j sum
 
 
 
+        sum:
+            add $t0, $t0, $t2       #sum everything
 
-
-        addi $t5, $t5, 1
-        addi $t7, $t7, -1
-        j loop2
+            addi $t5, $t5, 1
+            addi $t7, $t7, -1
+            j loop2
 
 printAnswer:
+    li $v0, 1       #selecting print function for syscall
+    move $a0, $t0  #selecting address of string
+    syscall
 
 
 exitProgram:
