@@ -74,7 +74,7 @@ main:
     
     storeRealValues:  
         li $t4, 0                   #increment for store real values
-        li $t3, 0                   #load address to store array of 4 bytes for the 4 real characters
+        li $t3, 3                   #load address to store array of 4 bytes for the 4 real characters
 
         loopStoreRealValues:  
             beq $t4, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
@@ -88,7 +88,7 @@ main:
             
             addi $t4, $t4, 1        #increment loop
             addi $t7, $t7, 1        #increment index for array of user input characters
-            addi $t3, $t3, 1        #increment index for character array
+            addi $t3, $t3, -1        #increment index for character array
             addi $t5, $t5, 1        #increment original character loop to skip the valid character and check for invalid characters in the check trailing remain characters function
             lb $t6, 0($t7)          #get next character from four bit array
 
@@ -152,6 +152,21 @@ check4CharactersArray:
 
         li $t1, 1           #reg for carrying exponent
 
+
+
+
+
+        ble $t6, 57, decimal
+        blt $t6, $t2, capitalLetters
+        blt $t6, $t3, lowercaseLetters
+        ble $t6, 127, nothingHappens
+
+
+
+
+
+
+
         exponentLoop:
             beq $t5, 0, exponent0
             beq $t5, 1, exponent1
@@ -173,7 +188,8 @@ check4CharactersArray:
                 mflo $s1
                 mult $s1, $t2
                 mflo $t2
-            exponent3: li $t9, $s1
+            exponent3: 
+                li $t9, $s1
                 mult $s1, $s1
                 mflo $s1
                 mult $s1, $t9
