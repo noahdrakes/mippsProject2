@@ -1,7 +1,7 @@
 .data   
     userInput: .space 1000
     newLineCharacter: .asciiz "/n"
-    array4characters: .byte 0,0,0,0 
+    array4characters: .space 4
 .text
 
 main:
@@ -67,17 +67,25 @@ main:
     
     #                       **STORE THE FIRST FOUR LEGITIMATE VALUES**
     
+
+
     #using register $t3 for array
 
-    li $t5, 0               #increment for store real values
     
-    storeRealValues:    
-        beq $t5, 3, checkRemainingTrailingCharacters        #check if increment is less than 4
-        sb $t6, 0($t3)
+    storeRealValues:  
+        li $t5, 0                   #increment for store real values
+        li $t3, 0                   #load address to store array of 4 bytes for the 4 real characters
 
-        addi $t5, $t5, 1
-        addi $t3, $t3, 1
-        j storeRealValues
+        loopStoreRealvalues:  
+            beq $t5, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
+            sb $t6, array4characters($t3)
+
+            lb $t6, 0($t7)
+
+            addi $t5, $t5, 1
+            addi $t7, $t7, 1        #increment index for array of user input characters
+            addi $t3, $t3, 1
+            j loopStoreRealValues
 
 
     checkRemainingTrailingCharacters:
