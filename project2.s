@@ -179,7 +179,8 @@ check4CharactersArray:
             add $t4, $t4, $t5
             j nothingHappens
 
-
+        nothingHappens:
+            #nothing happens
 
 
 
