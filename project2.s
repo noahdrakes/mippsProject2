@@ -168,7 +168,12 @@ check4CharactersArray:
             exponent1:
                 mult $s1, $t2
                 mflo $t2
-         
+            exponent2:
+                mult $s1, $s1
+                mflo $s1
+                mult $s1, $t2
+                mflo $t2
+            
 
 
 
