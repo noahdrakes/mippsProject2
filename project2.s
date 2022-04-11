@@ -93,7 +93,7 @@ main:
 
 
     checkRemainingTrailingCharacters:
-       beq $t5, 1000, check4CharactersArray
+       beq $t5, 1000, check4CharactersArray #loop condition -> once program has reached the 1000th character
 
         beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
         beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
@@ -120,6 +120,15 @@ invalidInput:
 
 
 check4CharactersArray:
+    li $t5, 0           #index of loop
+
+    loop2:
+        beq $t5, 4, printAnswer     #once loop ends print answer
+        lb $t6, array4characters($t5)       #get character from (potentially) valid character away
+
+        
+
+printAnswer:
 
 li $v0, 10              #select exit for syscall
 syscall
