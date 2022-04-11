@@ -167,7 +167,11 @@ check4CharactersArray:
             add $t4, $t4, $t5
             j nothingHappens
 
-
+        capitalLetters:
+            blt $t6, 65, nothingHappens
+            addi $t5, $t6, -55
+            add $t4, $t4, $t5
+            j nothingHappens
 
 
 
