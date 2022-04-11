@@ -32,7 +32,7 @@ main:
 
     move $t7, $a0           #move userInput value to an accessible register
     
-    li $t6, 0               #register for new string value without extra spaces
+    
     
     #value for storing single byte
     li $t6, 0
@@ -78,15 +78,23 @@ main:
 
         loopStoreRealValues:  
             beq $t4, 4, checkRemainingTrailingCharacters        #check if increment is less than 4
-            sb $t6, array4characters($t3)                       #store valid characters in new array                   
 
             #       if it sees a space, it jumps to trailing characters
-
-            
 
             beq $t6, 11, checkRemainingTrailingCharacters   #if character is line tab -> checkRemainingCharacters
             beq $t6, 9, checkRemainingTrailingCharacters    #if character is char tab -> checkRemainingCharacters
             beq $t6, 32, checkRemainingTrailingCharacters   #if character is space    -> checkRemainingCharacters
+
+            beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
+            beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
+
+            sb $t6, array4characters($t3)                       #store valid characters in new array                   
+
+            
+
+            
+
+            
             
             addi $t4, $t4, 1        #increment loop
             addi $t7, $t7, 1        #increment index for array of user input characters
@@ -95,8 +103,7 @@ main:
             lb $t6, 0($t7)          #get next character from four bit array
 
 
-            beq $t6, 10, check4CharactersArray   #if character is new line character character -> end of string, determine if its valid
-            beq $t6, 0, check4CharactersArray   #if character is null terminating character -> end of string, determine if its valid
+            
              
             j loopStoreRealValues
 
