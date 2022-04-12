@@ -50,10 +50,7 @@ main:
     jal subprogram
 
     subprogram:
-        #move $t7, $a3           #move userInput value to an accessible register
-        
-        
-        
+           
         #value for storing single byte
         li $t6, 0
 
