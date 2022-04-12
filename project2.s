@@ -167,6 +167,7 @@ check4CharactersArray:
 
 
 
+
         ble $t6, 57, decimal
         blt $t6, $s3, capitalLetters
         blt $t6, $t3, lowercaseLetters
@@ -192,6 +193,15 @@ check4CharactersArray:
         #add $t0, $t0, $t5
 
         exponentLoop:
+
+            move $s5, $t5 
+            move $s4, $t4
+
+            li $s8, 0
+
+            sub $s8, $s4, $t5
+            addi $s8, $s8, -1
+
             beq $t5, 3, exponent0
             beq $t5, 2, exponent1
             beq $t5, 1, exponent2
@@ -217,7 +227,9 @@ check4CharactersArray:
                 mult $t8, $t2
                 mflo $t2
                 j sum
-            exponent3: 
+            exponent3:
+                #beq $t4, 1, exponent0
+
                 li $t8, 0
                 li $t9, 0
                 mult $s1, $s1
