@@ -1,16 +1,11 @@
 .data   
-    userInput: .space 1000
+    userInput: .space 1002
     newLineCharacter: .asciiz "\n"
     array4characters: .space 4
     invalidInputString: .asciiz "Not recognized"
 .text
 
 main:
-
-
-
-
-
 
 #   $s0 = M
 #   $s1 = N
@@ -33,7 +28,7 @@ main:
 
     li $v0, 8               #get input from user
     la $a0, userInput       #read 1000 characters
-    li $a1, 999             #set amount of characters (bytes)
+    li $a1, 1001             #set amount of characters (bytes)
     syscall                 #execute previous instruction
 
     #   FOR SUBPROGRAM              #
