@@ -228,13 +228,3 @@ exitProgram:
     li $v0, 10              #select exit for syscall
     syscall
 
-
-
-# lb $t1, array4characters($t3)
-            # li $v0, 1       #selecting print function for syscall
-            # move $a0, $t1  #selecting address of string
-            # syscall
-
-            # li $v0, 4       #selecting print function for syscall
-            # la $a0, newLineCharacter  #selecting address of string
-            # syscall
