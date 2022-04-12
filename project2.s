@@ -11,10 +11,10 @@ main:
 
 
 
-#  ****occupied registers****
+
 #   $s0 = M
 #   $s1 = N
-#   $t7 = characters from user input
+#   $a3 = characters from user input
 #   #t6 = new register for update user input without unnecessary spaces
 
 
