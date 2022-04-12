@@ -50,19 +50,17 @@ main:
     jal subprogram
 
     subprogram:
-           
-        #value for storing single byte
-        li $t6, 0
-
 
         #                       **REMOVING BEGINNING SPACES AND TABS FROM BEGINNING **
-
+       
+        #value for storing single byte
+        li $t6, 0
 
         li $t5, 0 #increment for removeSpaces and Tabs
 
         removeSpacesAndTabs:
             beq $t5, 1000, storeRealValues  #check if reached end of input
-            lb $t6, 0($a3)      #load single byte into register $t6
+            lb $t6, 0($a3)      #load single byte from user input into register $t6
 
 
             #       checks if there are any spaces
@@ -180,8 +178,7 @@ main:
                 j exponentLoop
 
             exponentLoop:
-
-                # moving $t4 and $t5
+                # moving $t4 and $t5 values
                 # $t4 = # of Valid Values
                 # $t5 = counter (starts from 0 and goes to $t4)
 
@@ -234,14 +231,13 @@ main:
 
                 addi $t5, $t5, 1        #   increment index
                 addi $a3, $a3, 1        #   increment array index 
-                move $v0, $t0
+                move $v1, $t0           # stores sum in return register
                 j loop2
 jr $ra
 
 printAnswer:
-    move $s4, $v0
     li $v0, 1       #selecting print function for syscall
-    move $a0, $s4  #selecting address of string
+    move $a0, $v1   #selecting return register to print out
     syscall
 
 
