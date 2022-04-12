@@ -2,7 +2,7 @@
     userInput: .space 1000
     newLineCharacter: .asciiz "\n"
     array4characters: .space 4
-    invalidInputString: .asciiz "Not Recognized \n"
+    invalidInputString: .asciiz "Not recognized"
 .text
 
 main:
@@ -205,12 +205,12 @@ main:
                 exponent0:
                     j sum
                 exponent1:
-                    mult $s1, $t2
+                    mult $s0, $t2
                     mflo $t2
                     j sum
                 exponent2:
                     li $t8, 0
-                    mult $s1, $s1
+                    mult $s0, $s0
                     mflo $t8
                     mult $t8, $t2
                     mflo $t2
@@ -218,9 +218,9 @@ main:
                 exponent3:
                     li $t8, 0
                     li $t9, 0
-                    mult $s1, $s1
+                    mult $s0, $s0
                     mflo $t8
-                    mult $s1, $t8
+                    mult $s0, $t8
                     mflo $t9
                     mult $t9, $t2
                     mflo $t2
