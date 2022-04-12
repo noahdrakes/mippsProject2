@@ -194,18 +194,29 @@ check4CharactersArray:
 
         exponentLoop:
 
+            # moving $t4 and $t5
+            # $t4 = # of Valid Values
+            # $t5 = counter (starts from 0 and goes to $t4)
+
+            # moving these values to empty 's' registers
             move $s5, $t5 
             move $s4, $t4
 
+            #value to store exponent value
             li $s8, 0
+
+            # Formula to store route index to correct exponent
+            #       Exponent = (# of Values) - (index) - 1
 
             sub $s8, $s4, $t5
             addi $s8, $s8, -1
 
-            beq $t5, 3, exponent0
-            beq $t5, 2, exponent1
-            beq $t5, 1, exponent2
-            beq $t5, 0, exponent3
+
+            #exponent routing
+            beq $s8, 0, exponent0
+            beq $s8, 1, exponent1
+            beq $s8, 2, exponent2
+            beq $s8, 3, exponent3
 
 
 
