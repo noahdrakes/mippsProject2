@@ -192,10 +192,10 @@ check4CharactersArray:
         #add $t0, $t0, $t5
 
         exponentLoop:
-            beq $t5, 0, exponent0
-            beq $t5, 1, exponent1
-            beq $t5, 2, exponent2
-            beq $t5, 3, exponent3
+            beq $t5, 3, exponent0
+            beq $t5, 2, exponent1
+            beq $t5, 1, exponent2
+            beq $t5, 0, exponent3
 
 
 
@@ -211,18 +211,20 @@ check4CharactersArray:
                 mflo $t2
                 j sum
             exponent2:
+                li $t8, 0
                 mult $s1, $s1
-                mflo $s1
-                mult $s1, $t2
+                mflo $t8
+                mult $t8, $t2
                 mflo $t2
                 j sum
             exponent3: 
-                move $t9, $s1
+                li $t8, 0
+                li $t9, 0
                 mult $s1, $s1
-                mflo $s1
-                mult $s1, $t9
-                mflo $s1
-                mult $s1, $t2
+                mflo $t8
+                mult $s1, $t8
+                mflo $t9
+                mult $t9, $t2
                 mflo $t2
                 j sum
 
